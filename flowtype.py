@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """flowtype - push-to-talk dictation anywhere (a from-scratch Wispr Flow clone).
 
-Hold the hotkey, talk, let go: your words get cleaned up and typed into
+Press the hotkey, talk, press it again: your words get cleaned up and typed into
 whatever window has focus.
 
     flowtype daemon        run the background service (keeps the model warm)
-    flowtype start|stop    begin / end a recording (bound to key press / release)
-    flowtype toggle        start or stop, for tap-to-talk
+    flowtype start|stop    begin / end a recording (scripting)
+    flowtype toggle        start or stop (bound to Super+Alt+D)
     flowtype stats         words dictated, speed, time saved
     flowtype history [n]   last n transcripts
 """
@@ -36,8 +36,7 @@ DEFAULT_CONFIG = {
     "copy_output": True,  # also put on clipboard
     "remove_fillers": True,
     "min_seconds": 0.35,  # ignore accidental taps
-    "max_seconds": 180,  # auto-stop if the key release is missed
-    "max_seconds": 180,  # auto-stop if the key release is missed
+    "max_seconds": 300,  # auto-stop if you forget the second press
     # spoken word -> replacement, applied case-insensitively on whole words
     "dictionary": {"omarchy": "Omarchy", "hyprland": "Hyprland", "claude code": "Claude Code"},
     # say the trigger alone, get the expansion
@@ -167,7 +166,7 @@ class Daemon:
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             self.rec_started = started = time.time()
         threading.Timer(self.cfg["max_seconds"], self.auto_stop, args=(started,)).start()
-        self.notify.show("🎙  Listening…", "release to type")
+        self.notify.show("🎙  Listening…", "press Super+Alt+D again to type")
         return "recording"
 
     def stop(self):
@@ -284,7 +283,7 @@ def read_history():
 def stats():
     h = read_history()
     if not h:
-        print("No dictations yet. Hold Super+Alt+D and talk.")
+        print("No dictations yet. Press Super+Alt+D and talk.")
         return
     words = sum(e["words"] for e in h)
     talk = sum(e["audio_s"] for e in h)
