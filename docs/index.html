@@ -73,7 +73,7 @@ h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
 .wordmark i { width: 9px; height: 9px; border-radius: 50%; background: var(--ink); display: inline-block; transition: background .2s; }
 body.is-rec .wordmark i { background: var(--rec); }
 .top nav { display: flex; gap: 22px; font-size: var(--s2); }
-.top nav a { color: var(--mute); text-decoration: none; }
+.top nav a { color: var(--mute); text-decoration: none; white-space: nowrap; }
 .top nav a:hover { color: var(--ink); }
 
 /* ---- hero */
@@ -184,6 +184,9 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
   .facts div:nth-child(3) { padding-left: 0; border-left: 0; }
   .facts div:nth-child(n+3) { border-top: 1px solid var(--rule); }
 }
+@media (max-width: 600px) {
+  .top nav a:not(.keep) { display: none; }
+}
 @media (max-width: 480px) {
   dl.man { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   dl.man dd { margin-bottom: 12px; }
@@ -202,9 +205,9 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
     <nav>
       <a href="#how">How it works</a>
       <a href="#compare">vs Wispr Flow</a>
-      <a href="#install">Install</a>
+      <a class="keep" href="#install">Install</a>
       <a href="#reference">Reference</a>
-      <a href="https://github.com/neilyneilynig/flowtype">GitHub</a>
+      <a class="keep" href="https://github.com/neilyneilynig/flowtype">GitHub</a>
     </nav>
   </header>
 
