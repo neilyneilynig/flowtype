@@ -22,7 +22,8 @@ import time
 from pathlib import Path
 
 HOME = Path.home()
-STATE = Path(os.environ.get("XDG_RUNTIME_DIR", "/tmp")) / "flowtype"
+STATE = (Path(os.environ["XDG_RUNTIME_DIR"]) if os.environ.get("XDG_RUNTIME_DIR")
+         else HOME / ".cache") / "flowtype"
 SOCK = STATE / "flowtype.sock"
 DATA = HOME / ".local/share/flowtype"
 HISTORY = DATA / "history.jsonl"
@@ -234,6 +235,7 @@ class Daemon:
 
     def serve(self):
         STATE.mkdir(parents=True, exist_ok=True)
+        STATE.chmod(0o700)
         SOCK.unlink(missing_ok=True)
         self.load_model()
         srv = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -311,6 +313,8 @@ def history(n):
 
 
 def main():
+    # transcripts and recordings are private: keep everything we create user-only
+    os.umask(0o077)
     args = sys.argv[1:] or ["help"]
     cmd = args[0]
     if cmd == "daemon":
