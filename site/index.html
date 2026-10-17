@@ -1,6 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>flowtype</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Press a key, talk, press it again. Local Whisper dictation for Linux that types into any app.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%276%27 fill=%27%23d1332a%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -42,7 +47,10 @@
 }
 
 * { box-sizing: border-box; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
 body {
+  margin: 0;
   background: var(--paper);
   color: var(--ink);
   font: 400 var(--s3)/1.6 var(--body);
@@ -141,6 +149,13 @@ section.band { border-top: 1px solid var(--rule); padding-block: 72px; }
 .fixes td:first-child { font-family: var(--mono); font-size: var(--s1); color: var(--mute); width: 46%; }
 .fixes td:last-child { white-space: pre-wrap; }
 .table-scroll { overflow-x: auto; }
+.fixes.vs { min-width: 560px; }
+.fixes.vs td:first-child { width: 26%; font-family: var(--body); font-size: var(--s2); color: var(--mute); }
+.fixes.vs td:nth-child(2) { width: 34%; }
+.fixes.vs td:last-child { color: var(--mute); }
+.fixes.vs td b { color: var(--ink); font-weight: 600; }
+.fixes.vs th:nth-child(2) { color: var(--ink); }
+.note { margin: 14px 0 0; font-size: var(--s1); color: var(--mute); }
 
 .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
 .facts div { padding: 20px 20px 20px 0; }
@@ -178,14 +193,18 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="top">
     <a class="wordmark" href="#top"><i></i>flowtype</a>
     <nav>
       <a href="#how">How it works</a>
+      <a href="#compare">vs Wispr Flow</a>
       <a href="#install">Install</a>
       <a href="#reference">Reference</a>
+      <a href="https://github.com/neilyneilynig/flowtype">GitHub</a>
     </nav>
   </header>
 
@@ -194,7 +213,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
       <div>
         <h1><span>Press.</span><span>Talk.</span><span class="quiet">Press again.</span></h1>
         <p class="lede">Dictation for Linux that types into whatever window you're in.</p>
-        <p>Whisper runs on your own GPU, so your voice never leaves the machine. It works in your editor, browser, terminal and chat apps, anywhere a cursor can go.</p>
+        <p>Free and open source, with no word limits. Whisper runs on your own GPU, so your voice never leaves the machine. It works in your editor, browser, terminal and chat apps, anywhere a cursor can go.</p>
         <div class="cta">
           <a class="btn" href="#install">Install flowtype</a>
           <span class="keys" aria-label="Hotkey Super plus Alt plus D">
@@ -290,6 +309,29 @@ This is Omarchy on Hyprland</td></tr>
       </div>
     </section>
 
+    <section class="band" id="compare">
+      <div class="band-head">
+        <h2>flowtype vs Wispr Flow</h2>
+        <p>Wispr Flow is a good product. It's also a subscription with a weekly word cap on the free plan, and Linux isn't on its list of platforms. flowtype exists for people who want the same press-and-talk habit without either.</p>
+      </div>
+      <div class="band-body table-scroll">
+        <table class="fixes vs">
+          <thead><tr><th></th><th>flowtype</th><th>Wispr Flow</th></tr></thead>
+          <tbody>
+            <tr><td>Price</td><td><b>Free</b></td><td>Free plan, or Pro at $15/month ($12/month billed yearly)</td></tr>
+            <tr><td>Free plan limit</td><td><b>None</b></td><td>2,000 words a week on desktop, 1,000 on mobile</td></tr>
+            <tr><td>Linux</td><td><b>Yes</b>, built for Wayland and Hyprland</td><td>Not listed. Mac, Windows, iOS and Android</td></tr>
+            <tr><td>Works offline</td><td><b>Yes</b>, speech is recognised on your GPU</td><td>Not stated on the pricing page</td></tr>
+            <tr><td>Account</td><td><b>None</b></td><td>Required</td></tr>
+            <tr><td>Source code</td><td><b>Open</b>, MIT licence</td><td>Closed</td></tr>
+            <tr><td>AI rewriting and per-app tone</td><td>Rule-based cleanup only</td><td><b>Yes</b></td></tr>
+            <tr><td>Phone apps</td><td>No</td><td><b>Yes</b></td></tr>
+          </tbody>
+        </table>
+        <p class="note">Wispr Flow details are from <a href="https://wisprflow.ai/pricing">wisprflow.ai/pricing</a>, checked October 2026. Prices and plans may have changed since.</p>
+      </div>
+    </section>
+
     <section class="band" id="install">
       <div class="band-head">
         <h2>Install</h2>
@@ -302,8 +344,10 @@ This is Omarchy on Hyprland</td></tr>
 <span class="p">$ </span>sudo pacman -S wtype wl-clipboard pipewire
 <span class="p">$ </span>pip install faster-whisper
 
-<span class="c"># the command and the service</span>
-<span class="p">$ </span>ln -s ~/Projects/flowtype/flowtype.py ~/.local/bin/flowtype
+<span class="c"># get it</span>
+<span class="p">$ </span>git clone https://github.com/neilyneilynig/flowtype
+<span class="p">$ </span>cd flowtype
+<span class="p">$ </span>ln -s "$PWD/flowtype.py" ~/.local/bin/flowtype
 <span class="p">$ </span>cp flowtype.service ~/.config/systemd/user/
 <span class="p">$ </span>systemctl --user enable --now flowtype</pre>
         </div>
@@ -355,7 +399,7 @@ pong</pre>
   </main>
 
   <footer>
-    <span>flowtype is an independent, open take on push-to-talk dictation apps like Wispr Flow.</span>
+    <span>flowtype is an independent open-source project, not affiliated with Wispr. <a href="https://github.com/neilyneilynig/flowtype">Source on GitHub</a>, MIT licence.</span>
     <span>Speech recognition by OpenAI Whisper via faster-whisper.</span>
   </footer>
 </div>
@@ -480,3 +524,5 @@ pong</pre>
   if (!reduce) raf = requestAnimationFrame(tick);
 })();
 </script>
+</body>
+</html>

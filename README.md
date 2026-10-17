@@ -9,4 +9,4 @@ My own from-scratch version of [Wispr Flow](https://wisprflow.ai): voice dictati
 
 Runs as the `flowtype.service` systemd user service, which keeps the model loaded.
 
-The website is in `site/index.html`.
+Website: https://neilyneilynig.github.io/flowtype/ (source in `site/`).

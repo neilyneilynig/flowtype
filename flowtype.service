@@ -4,7 +4,8 @@ After=graphical-session.target pipewire.service
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=/home/neil/.local/share/mise/installs/python/latest/bin/python3 %h/Projects/flowtype/flowtype.py daemon
+# point this at the python3 that has faster-whisper installed
+ExecStart=/usr/bin/python3 %h/.local/bin/flowtype daemon
 Restart=on-failure
 RestartSec=3
 
