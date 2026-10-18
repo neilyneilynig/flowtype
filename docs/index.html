@@ -216,7 +216,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
       <div>
         <h1><span>Press.</span><span>Talk.</span><span class="quiet">Press again.</span></h1>
         <p class="lede">Dictation for Linux that types into whatever window you're in.</p>
-        <p>Free and open source, with no word limits. Whisper runs on your own GPU, so your voice never leaves the machine. It works in your editor, browser, terminal and chat apps, anywhere a cursor can go.</p>
+        <p>Free and open source, with no word limits. Speech recognition and AI rewriting run on your own GPU, so your voice never leaves the machine. It works in your editor, browser, terminal and chat apps, anywhere a cursor can go.</p>
         <div class="cta">
           <a class="btn" href="#install">Install flowtype</a>
           <span class="keys" aria-label="Hotkey Super plus Alt plus D">
@@ -270,7 +270,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
           </li>
           <li>
             <h3>Press again</h3>
-            <p>Whisper transcribes the clip, flowtype cleans it up, and the text is typed at your cursor and copied to the clipboard.</p>
+            <p>Whisper transcribes the clip, a local model tidies it for the app you're in, and the text is typed at your cursor and copied to the clipboard.</p>
           </li>
         </ol>
       </div>
@@ -279,7 +279,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
     <section class="band">
       <div class="band-head">
         <h2>What you say, what it types</h2>
-        <p>Real output from the cleanup step. Fillers come out, repeated words collapse, spoken punctuation becomes punctuation, and your own dictionary fixes the names Whisper gets wrong.</p>
+        <p>Real output from flowtype. Rules remove fillers and handle spoken punctuation. A local AI model then resolves self-corrections and matches the app you're typing in: casual in Slack and Discord, full sentences in email, exact commands in a terminal.</p>
       </div>
       <div class="band-body table-scroll">
         <table class="fixes">
@@ -287,7 +287,9 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
           <tbody>
             <tr><td>um so I I think we should, uh, ship it new line thanks period</td><td>So I think we should ship it
 Thanks.</td></tr>
-            <tr><td>The error, um, is gone</td><td>The error is gone</td></tr>
+            <tr><td>so we should ship it tomorrow actually no wait friday because QA needs time</td><td>So we should ship it Friday because QA needs time.</td></tr>
+            <tr><td>um hey sam the build is done I mean almost done we need the icons the docs and the release notes thanks <span style="font-family:var(--body)">(in email)</span></td><td>Hey Sam, the build is almost done. We need the icons, the docs, and the release notes, thanks.</td></tr>
+            <tr><td>git commit dash m fix the wave form drawing <span style="font-family:var(--body)">(in a terminal)</span></td><td><code>git commit -m "fix the wave form drawing"</code></td></tr>
             <tr><td>hello new paragraph this is omarchy on hyprland</td><td>Hello
 
 This is Omarchy on Hyprland</td></tr>
@@ -300,14 +302,14 @@ This is Omarchy on Hyprland</td></tr>
     <section class="band">
       <div class="band-head">
         <h2>Runs on your machine</h2>
-        <p>Measured on a laptop RTX 4050 with Whisper small.en. No account, no subscription, nothing uploaded.</p>
+        <p>Measured on a laptop RTX 4050 with Whisper small.en and Qwen3 4B. No account, no subscription, nothing uploaded.</p>
       </div>
       <div class="band-body">
         <div class="facts">
-          <div><b>0.53 s</b><span>to transcribe a 5-second sentence</span></div>
+          <div><b>0.64 s</b><span>from second key press to polished text, for a short sentence</span></div>
           <div><b>0</b><span>bytes of audio sent anywhere</span></div>
           <div><b>1 key</b><span>to start, the same key to stop</span></div>
-          <div><b>334</b><span>lines of Python, one file</span></div>
+          <div><b>453</b><span>lines of Python, one file</span></div>
         </div>
       </div>
     </section>
@@ -315,7 +317,7 @@ This is Omarchy on Hyprland</td></tr>
     <section class="band" id="compare">
       <div class="band-head">
         <h2>flowtype vs Wispr Flow</h2>
-        <p>Wispr Flow is a good product. It's also a subscription with a weekly word cap on the free plan, and Linux isn't on its list of platforms. flowtype exists for people who want the same press-and-talk habit without either.</p>
+        <p>Wispr Flow is a good product. It's also a subscription with a weekly word cap on the free plan, and Linux isn't on its list of platforms. flowtype gives you the same press-and-talk habit, AI rewriting included, without either.</p>
       </div>
       <div class="band-body table-scroll">
         <table class="fixes vs">
@@ -327,7 +329,7 @@ This is Omarchy on Hyprland</td></tr>
             <tr><td>Works offline</td><td><b>Yes</b>, speech is recognised on your GPU</td><td>Not stated on the pricing page</td></tr>
             <tr><td>Account</td><td><b>None</b></td><td>Required</td></tr>
             <tr><td>Source code</td><td><b>Open</b>, MIT licence</td><td>Closed</td></tr>
-            <tr><td>AI rewriting and per-app tone</td><td>Rule-based cleanup only</td><td><b>Yes</b></td></tr>
+            <tr><td>AI rewriting and per-app tone</td><td><b>Yes</b>, with a local model through Ollama, or Claude if you prefer</td><td><b>Yes</b></td></tr>
             <tr><td>Phone apps</td><td>No</td><td><b>Yes</b></td></tr>
           </tbody>
         </table>
@@ -346,6 +348,10 @@ This is Omarchy on Hyprland</td></tr>
 <pre class="term"><span class="c"># tools it calls</span>
 <span class="p">$ </span>sudo pacman -S wtype wl-clipboard pipewire
 <span class="p">$ </span>pip install faster-whisper
+
+<span class="c"># optional: local AI rewriting</span>
+<span class="p">$ </span>sudo pacman -S ollama
+<span class="p">$ </span>ollama pull qwen3:4b-instruct
 
 <span class="c"># get it</span>
 <span class="p">$ </span>git clone https://github.com/neilyneilynig/flowtype
@@ -380,6 +386,7 @@ pong</pre>
             <dt>flowtype toggle</dt><dd>Start listening, or stop and type. This is what the hotkey runs.</dd>
             <dt>flowtype stats</dt><dd>Words dictated, speaking pace and time saved compared with typing.</dd>
             <dt>flowtype history 20</dt><dd>Your last 20 dictations, with times.</dd>
+            <dt>flowtype polish chat "…"</dt><dd>Try the AI rewrite on some text. Tones are chat, email, code and general.</dd>
             <dt>flowtype reload</dt><dd>Re-read the config without restarting.</dd>
             <dt>flowtype daemon</dt><dd>Run the service in the foreground, useful for debugging.</dd>
           </dl>
@@ -393,6 +400,9 @@ pong</pre>
   "copy_output": true,
   "remove_fillers": true,
   "max_seconds": 300,
+  "polish": "ollama",
+  "polish_model": "qwen3:4b-instruct",
+  "app_tones": { "obsidian": "email" },
   "dictionary": { "hyprland": "Hyprland" },
   "snippets": { "my email": "you@example.com" }
 }</pre>
